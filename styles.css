@@ -1,0 +1,111 @@
+/* Reset dasar dan set tampilan full screen */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  background-color: #ccc;
+}
+/* Container buku dengan perspektif untuk efek 3D */
+.book {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  perspective: 2000px;
+  background-color: #ccc;
+}
+/* Setiap halaman diatur agar memenuhi layar, diberi padding untuk teks, dan disembunyikan secara default */
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  padding: 40px;
+  display: none;
+  overflow-y: auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+/* Kelas "visible" menampilkan halaman yang seharusnya terlihat */
+.page.visible {
+  display: block;
+}
+/* Konten halaman */
+.page .content {
+  width: 100%;
+  height: 100%;
+}
+/* Styling paragraf agar nyaman dibaca */
+.page p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  text-align: justify;
+}
+/* Elemen flipper digunakan untuk animasi pergantian halaman */
+.flipper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  padding: 40px;
+  overflow-y: auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: none;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Animasi flip forward:
+   Efek ini mensimulasikan pembukaan halaman ke kanan dengan lengkungan lembut.
+   Transformasi rotateY dikombinasikan dengan scaleX dan box-shadow memberikan kesan kertas yang lentur. */
+@keyframes flipForward {
+  0% {
+    transform: perspective(2000px) rotateY(0deg) scaleX(1);
+    box-shadow: none;
+  }
+  30% {
+    transform: perspective(2000px) rotateY(-54deg) scaleX(0.92);
+  }
+  50% {
+    transform: perspective(2000px) rotateY(-90deg) scaleX(0.8);
+    box-shadow: -20px 0 30px rgba(0,0,0,0.5);
+  }
+  70% {
+    transform: perspective(2000px) rotateY(-126deg) scaleX(0.92);
+  }
+  100% {
+    transform: perspective(2000px) rotateY(-180deg) scaleX(1);
+    box-shadow: none;
+  }
+}
+
+/* Animasi flip backward:
+   Efek pembalikan halaman ke kiri dengan lengkungan lembut, kebalikan dari animasi flipForward. */
+@keyframes flipBackward {
+  0% {
+    transform: perspective(2000px) rotateY(180deg) scaleX(1);
+    box-shadow: none;
+  }
+  30% {
+    transform: perspective(2000px) rotateY(126deg) scaleX(0.92);
+  }
+  50% {
+    transform: perspective(2000px) rotateY(90deg) scaleX(0.8);
+    box-shadow: 20px 0 30px rgba(0,0,0,0.5);
+  }
+  70% {
+    transform: perspective(2000px) rotateY(54deg) scaleX(0.92);
+  }
+  100% {
+    transform: perspective(2000px) rotateY(0deg) scaleX(1);
+    box-shadow: none;
+  }
+}
